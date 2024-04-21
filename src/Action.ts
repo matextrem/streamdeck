@@ -250,7 +250,7 @@ export class Action<
   ): void {
     this.send({
       event: "setTitle",
-      context: context,
+      context,
       payload: {
         title: String(input),
         target,

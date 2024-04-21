@@ -1,6 +1,6 @@
 export function runHandler<T>(
   target: T,
-  data: { event: string; payload: Record<string, unknown> },
+  data: { event: string; payload: Record<string, unknown>; context?: string },
 ) {
   const event = data.event as string;
   const handlerName = `handle${event[0].toUpperCase()}${event.substring(1)}`;
@@ -10,7 +10,11 @@ export function runHandler<T>(
   const handler = target[handlerName];
 
   if (handler) {
-    handler.call(target, { event: data.event, ...data.payload });
+    handler.call(target, {
+      event: data.event,
+      context: data.context,
+      ...data.payload,
+    });
     return;
   }
 }
